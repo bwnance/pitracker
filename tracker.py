@@ -83,6 +83,8 @@ def run():
     instock_pis = parse_pi_data(pi_data)
     if len(instock_pis) > 0:
         notify(instock_pis)
+    else:
+        print("no pis, sorry!")
 
 
 if __name__ == "__main__":

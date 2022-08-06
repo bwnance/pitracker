@@ -12,9 +12,11 @@ def init_selenium():
     chrome_options.add_argument("--headless")
     if os.getenv("ENVIRONMENT") != "DEV":
         chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
-    chrome_kwargs = {"options": chrome_options, "executable_path": driver_path}
+    chrome_kwargs = {
+        "options": chrome_options,
+    }
     if os.getenv("ENVIRONMENT") == "DEV":
-        del chrome_kwargs["executable_path"]
+        chrome_kwargs["executable_path"] = driver_path
     driver = webdriver.Chrome(**chrome_kwargs)
     return driver
 
