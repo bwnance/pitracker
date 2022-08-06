@@ -6,16 +6,16 @@ from urllib.parse import parse_qs, urlparse
 from selenium.webdriver.chrome.options import Options
 
 
-DRIVER_FOLDER = "./drivers/"
-
-
 def init_selenium():
     driver_path = os.getenv("CHROME_DRIVER_PATH")
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(
-        executable_path=driver_path, options=chrome_options
-    )
+    if os.getenv("ENVIRONMENT") != "DEV":
+        chrome_options.binary_location = "/app/.apt/usr/bin/google-chrome"
+    chrome_kwargs = {"options": chrome_options, "executable_path": driver_path}
+    if os.getenv("ENVIRONMENT") == "DEV":
+        del chrome_kwargs["executable_path"]
+    driver = webdriver.Chrome(**chrome_kwargs)
     return driver
 
 
