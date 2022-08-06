@@ -80,7 +80,6 @@ def notify(instock_pis):
 
 def run():
     pi_data = get_pi_data()
-    print(pi_data)
     instock_pis = parse_pi_data(pi_data)
     if len(instock_pis) > 0:
         notify(instock_pis)
