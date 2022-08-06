@@ -1,0 +1,39 @@
+<h1>
+    Raspberry Pis are in stock!
+</h1>
+
+<style>
+    table {
+        border: 0;
+        width: 80%;
+        margin: auto;
+        background: #ffffff;
+    }
+
+    td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    h1 {
+        text-align: center;
+    }
+</style>
+<table>
+    <tr>
+        <th>SKU</th>
+        <th>Vendor</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Link</th>
+    </tr>
+    {% for pi in pi_data %}
+    <tr>
+        <td>{{ pi['sku'] }}</td>
+        <td>{{ pi['vendor'] }}</td>
+        <td>{{ pi['description'] }}</td>
+        <td>{{ pi['price']['display'] }} {{ pi['price']['currency'] }}</td>
+        <td><a href={{ pi['link'] }}>Buy It!</a></td>
+    </tr>
+    {% endfor %}
+</table>
