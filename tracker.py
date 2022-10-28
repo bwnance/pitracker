@@ -11,7 +11,9 @@ from email.mime.multipart import MIMEMultipart
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import css_inline
 
-
+DENYLISTED_URLS = [
+    "https://www.digikey.com/en/products/detail/raspberry-pi/SC0694/13530925",
+]
 load_dotenv()
 jinja_env = Environment(
     loader=FileSystemLoader("email_templates"),
@@ -54,6 +56,8 @@ def parse_pi_data(pi_data):
     instock = [datum for datum in pi_data if datum["avail"] != "No"]
     matching_pis = []
     for instock_pi in instock:
+        if instock_pi["link"] in DENYLISTED_URLS:
+            continue
         if re.search(sku_prefixes_regex, instock_pi["sku"]) and re.search(
             countries_regex, instock_pi["vendor"]
         ):
