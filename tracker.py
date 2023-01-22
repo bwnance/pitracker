@@ -31,24 +31,30 @@ sender_email = os.getenv("SENDER_EMAIL")
 
 def get_pi_data():
 
-    cfid, cftoken, local_token = selenium_handler.get_cf_info_and_localtoken()
+    (
+        cfid,
+        cftoken,
+        local_token,
+        other_token,
+    ) = selenium_handler.get_cf_info_and_localtoken()
 
     cur_epoch = str(int(time.time() * 1000))
     url = "https://rpilocator.com/data.cfm"
 
     query_params = {
         "method": "getProductTable",
-        "token": local_token,
+        "token": other_token,
         # "country": country,
         "_": cur_epoch,
     }
     headers = {
         "cookie": f"cfid={cfid}; cftoken={cftoken}; RPILOCATOR=0; CFID={cfid}; CFTOKEN={cftoken}",
         "x-requested-with": "XMLHttpRequest",
+        "referer": "https://rpilocator.com/",
+        "accept": "application/json, text/javascript, */*; q=0.01",
     }
 
     response = requests.get(url, headers=headers, params=query_params)
-
     return response.json()["data"]
 
 

@@ -30,11 +30,11 @@ def get_cf_info_and_localtoken():
         if "rpilocator.com/data.cfm" in request.url
     ][0]
     cookie_header = data_request.headers.get("cookie")
-
+    other_token = data_request.params["token"]
     cfid = re.match(r"cfid=(.{8}-.{4}-.{4}-.{4}-.{12});", cookie_header).group(
         1
     )
     local_token = parse_qs(urlparse(data_request.url).query)["token"][0]
     cftoken = "0"
     driver.quit()
-    return cfid, cftoken, local_token
+    return cfid, cftoken, local_token, other_token
